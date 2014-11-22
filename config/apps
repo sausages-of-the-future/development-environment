@@ -5,26 +5,5 @@
 # The format is app-name:port
 
 
-system-of-record:8000
-mint:8001
-property-frontend:8002
-search-api:8003
-casework-frontend:8004
-generate-test-data:0
-the-feeder:8006
-service-frontend:8007
-decision:8009
-acceptance-tests:0
-datatypes:0
-audit-plugin:0
-html-prototypes:9000
-secrets:0
-style-guide:9001
-service-tests:0
-ownership:8010
-matching:8011
-fixtures:8012
-introductions:8013
-cases:8014
-historian:8015
-lr-utils:0
+registry:8000
+fishing:8001
