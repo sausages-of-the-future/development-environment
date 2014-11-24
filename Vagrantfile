@@ -8,7 +8,7 @@ Vagrant.configure("2") do |config|
   config.vm.synced_folder ".aptget", "/var/cache/apt/archives/"
 
   config.vm.provider :virtualbox do |vb|
-    vb.name = "landregistry-development"
+    vb.name = "gov-development"
     vb.customize ['modifyvm', :id, '--memory', ENV['VM_MEMORY'] || 3072]
     vb.customize ['modifyvm', :id, '--natdnshostresolver1', 'on']
     vb.customize ['modifyvm', :id, '--natdnsproxy1', 'on']

@@ -27,14 +27,6 @@ esac
 source /vagrant/script/dev-env-functions
 cd /vagrant
 
-echo
-echo "Prepare to have your face melted..."
-echo
-echo 
-cat /vagrant/config/facemelt.txt
-echo
-echo
-
 
 echo "Removing logs"
 rm -rf /vagrant/logs/*
@@ -46,7 +38,7 @@ echo "Removing web asset cache"
 find . -type d -name ".webasset-cache" | xargs rm -rf
 
 echo "Removing python virtual envrionments"
-rm -rf /home/vagrant/land-registry-python-venvs
+rm -rf /home/vagrant/gov-python-venvs
 
 echo "Removing unit test coverage reports"
 find . -type d -name "htmlcov" | xargs rm -rf

@@ -263,7 +263,7 @@ function configure_nginx_and_host_file {
   APPSLIST=/vagrant/config/apps
   SPLASH_PAGE=/vagrant/config/index.html
 
-  export DOMAIN="landregistry.local"
+  export DOMAIN="gov.local"
 
   # Ensure domain
   TMPDEFAULT=$(mktemp -t nginx-default.XXXXXX)
@@ -326,7 +326,5 @@ EOF
   sudo cp $SPLASH_PAGE $TEMP
   perl -pi -e 's/PLACEHOLDER/$ENV{"APP_HTML_LIST"}/g' $TEMP
   sudo cp $TEMP /usr/share/nginx/html/index.html
-  sudo cp /vagrant/config/spy.html /usr/share/nginx/html/spy.html
-  sudo cp /vagrant/config/spy.js /usr/share/nginx/html/spy.js
   sudo service nginx restart > /dev/null 2>&1
 }

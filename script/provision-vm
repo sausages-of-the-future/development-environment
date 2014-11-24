@@ -3,7 +3,7 @@ set -e
 
 echo "Running devkit puppet module"
 rm -rf /tmp/devkit
-git clone https://github.com/LandRegistry/infrastructure-puppet-devkit /tmp/devkit
+git clone https://github.com/18D82E427F8755FFD90867600EC29F39/infrastructure-puppet-devkit /tmp/devkit
 puppet apply /tmp/devkit/tests/optional.pp --modulepath=/tmp
 
 echo "Updating repositories"
@@ -11,23 +11,19 @@ apt-get update -qq
 
 echo "Setting up core linux tools"
 apt-get install -qy libcurl4-openssl-dev phantomjs
-apt-get install -qy binutils libproj-dev gdal-bin libgdal-dev libgeos-3.4.2 libproj0 libgdal1h  python-gdal
+#apt-get install -qy binutils libproj-dev gdal-bin libgdal-dev libgeos-3.4.2 libproj0 libgdal1h  python-gdal
 
+#mongo db
 echo "setting up mongodb"
 apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
 echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list
 apt-get update
 apt-get install -y mongodb-org
 
-
-service mongod start
-
 set +o errexit
 
-sudo /etc/init.d/elasticsearch start
-
 echo "Configuring user environment"
-WORKON_HOME=/home/vagrant/land-registry-python-venvs
+WORKON_HOME=/home/vagrant/gov-python-venvs
 bash_profile=/home/vagrant/.bash_profile
 rm -rf ${WORKON_HOME}
 mkdir -p ${WORKON_HOME}
@@ -35,7 +31,7 @@ mkdir -p ${WORKON_HOME}
 echo "Bootstrapping environment"
 su vagrant -c cat <<EOF > /home/vagrant/.ssh/config
 Host github.com
-	StrictHostKeyChecking no 
+	StrictHostKeyChecking no
 
 EOF
 chown -R vagrant:vagrant /home/vagrant
