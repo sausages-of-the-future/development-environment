@@ -4,6 +4,7 @@
 #
 # The format is app-name:port
 
-
 registry:8000
 fishing:8001
+organisations:8002
+www:8003
