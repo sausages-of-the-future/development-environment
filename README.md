@@ -1,6 +1,6 @@
-## Land Registry Development Environment
+## Development Environment
 
-This repository contains the setup scripts for developers to quickly get up and running with the Land Registry codebase. By bootstrapping their developer environment from these scripts developers will be able to get all of the code repositories, run the unit tests and start the various applications that make up the land registry systems.
+This repository contains the setup scripts for developers to quickly get up and running. By bootstrapping their developer environment from these scripts developers will be able to get all of the code repositories, run the unit tests and start the various applications that make up the land registry systems.
 
 
 ## Prerequisites
@@ -16,23 +16,14 @@ In order to run the development environment locally you will need
 Before using the service ensure that the following line is in your hostfile on the host machine. (Normally in /etc/hosts)
 
 ```
-172.16.42.43  system-of-record.landregistry.local mint.landregistry.local property-frontend.landregistry.local search-api.landregistry.local casework-frontend.landregistry.local public-titles-api.landregistry.local the-feeder.landregistry.local service-frontend.landregistry.local geo.landregistry.local html-prototypes.landregistry.local style-guide.landregistry.local decision.landregistry.local
+172.16.42.43 govuk.local registry.govuk.local fishing.govuk.local organisations.govuk.local www.govuk.local
 ```
 
-This is the most recent list of hosts at the time of writing this. Running ```lr-nginx``` will give you the most recent list.
+This is the most recent list of hosts at the time of writing this. When you vagrant ssh into the box you will see the latest list of apps.
 
 ### Configuring SSH agent forwarding
 
-To allow github repos to be cloned down while inside the vagrant box, you need to give it access to your local ssh keys. Create your ssh config file if you don't have one already:
-
-```
-touch ~/.ssh/config
-```
-and add the following lines:
-```
-Host 172.16.42.43
-   ForwardAgent yes
-```
+This is done automatically as part of the dev env provisioning process.
 
 ## Creating the environment
 
@@ -55,7 +46,7 @@ This will log into the machine and check out all of the applications in the */va
 To run all of the unit tests configured in the applications simply log into the VM and run
 
 ```
-lr-run-all-unit-tests
+dev-run-all-unit-tests
 ```
 
 ## Starting up all of the applications
@@ -63,7 +54,7 @@ lr-run-all-unit-tests
 To start up all of the applications run
 
 ```
-lr-start-all
+dev-start-all
 ```
 
 ## Appplication files & log locations
@@ -77,7 +68,7 @@ Logs for each individual application can be found in */vagrant/logs*
 Simply run
 
 ```
-lr-update-all-apps
+dev-update-all-apps
 ```
 
 ## To upgrade all of the databases
@@ -85,7 +76,7 @@ lr-update-all-apps
 Simply run
 
 ```
-lr-upgrade-all-databases
+dev-upgrade-all-databases
 ```
 
 ## To create all of the databases
@@ -93,7 +84,7 @@ lr-upgrade-all-databases
 Run
 
 ```
-lr-create-all-databases
+dev-create-all-databases
 ```
 
 Note: This will run automatically when the VM is provisioned.
@@ -103,7 +94,7 @@ Note: This will run automatically when the VM is provisioned.
 To clean out the environment and python virtual environments for all applications you can run
 
 ```
-lr-clean
+dev-clean
 ```
 
 To clean out the whole environment and begin again from scratch you can run the following commands from the host machine, not inside the VM.
