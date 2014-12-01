@@ -1,0 +1,6 @@
+#!/bin/bash
+dev-killtree $(pgrep start-all) SIGKILL
+rm /vagrant/Procfile
+dev-update-all-apps
+dev-clean
+dev-start-all

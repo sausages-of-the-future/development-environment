@@ -1,0 +1,51 @@
+#!/bin/bash
+
+#TODO: work on doing all this in puppet, and not just puppet exec either :)
+
+set -e
+set +o errexit
+
+echo "Configuring user environment"
+WORKON_HOME=/home/vagrant/.virtualenvs
+bash_profile=/home/vagrant/.bash_profile
+rm -rf ${WORKON_HOME}
+mkdir -p ${WORKON_HOME}
+
+echo "Bootstrapping environment"
+su vagrant -c cat <<EOF > /home/vagrant/.ssh/config
+Host github.com
+	StrictHostKeyChecking no
+
+EOF
+chown -R vagrant:vagrant /home/vagrant
+su vagrant -c /vagrant/script/bin/bootstrap
+
+cat <<EOF > ${bash_profile}
+export WORKON_HOME=${WORKON_HOME}
+export PATH=/vagrant/script/bin:${PATH}
+
+source /usr/local/bin/virtualenvwrapper.sh
+alias ls="ls -F"
+cd /vagrant
+
+if [[ ! -d ./apps ]] ; then
+	echo "Bootstrapping environment"
+	dev-bootstrap
+fi
+
+echo
+echo "Add the following to the /etc/hosts file on your host machine"
+echo -e "\e[96m \`less /home/vagrant/.etchosts\` \e[0m"
+echo
+
+dev-nginx-conf
+EOF
+
+echo "Creating databases"
+set +o errexit
+su vagrant -c /vagrant/script/bin/create-all-databases
+set -e
+
+# A reminder...
+echo "Copying motd"
+sudo cp /vagrant/config/motd /etc/motd
