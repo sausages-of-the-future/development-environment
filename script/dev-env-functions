@@ -5,6 +5,7 @@ mkdir -p /vagrant/logs
 
 apps_and_ports=`cat /vagrant/config/apps | grep -v \# | grep -v '^\s*$'`
 DEV_ENV_REQUIREMENTS=/vagrant/config/virtual-env-global-requirements.txt
+GITHUB_ACCOUNT='sausages-of-the-future'
 
 function get_port_for_app {
   local app=$1
@@ -67,7 +68,7 @@ function checkout {
 
   if [[ ! -d ${app_dir} ]] ; then
     mkdir -p /vagrant/apps/
-    git -C /vagrant/apps/ clone git@github.com:18D82E427F8755FFD90867600EC29F39/${app}.git
+    git -C /vagrant/apps/ clone git@github.com:${GITHUB_ACCOUNT}/${app}.git
     update_submodules_for_app ${app}
   fi
 }
