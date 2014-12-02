@@ -3,6 +3,7 @@
 set -e
 
 source /vagrant/script/dev-env-functions
+source /usr/local/bin/virtualenvwrapper.sh
 
 if [[ -z ${@} ]] ; then
 	echo "No application specified to start!"

@@ -115,7 +115,8 @@ function update_app {
   fi
 }
 
-function create_virtual_env {
+function init_virtual_env {
+  source /usr/local/bin/virtualenvwrapper.sh
   local app_name=$1
   if [[ ! -d ${WORKON_HOME}/${app_name} ]] ; then
     echo "Creating python virtual env for ${app_name} in ${WORKON_HOME}"
@@ -249,10 +250,9 @@ function die_cant_find_any_apps {
 }
 
 function configure_virtual_env_for_apps {
-  source /usr/local/bin/virtualenvwrapper.sh
   for app_to_start in $@; do
     (
-      create_virtual_env ${app_to_start}
+      init_virtual_env ${app_to_start}
       deactivate
     )
   done
@@ -263,7 +263,7 @@ function configure_nginx {
   APPSLIST=/vagrant/config/apps
   SPLASH_PAGE=/vagrant/config/index.html
 
-  export DOMAIN="govuk.local"
+  export DOMAIN="gov.local"
 
   # Ensure domain
   TMPDEFAULT=$(mktemp -t nginx-default.XXXXXX)
@@ -343,4 +343,23 @@ function configure_host {
   0.0.0.0 devserver
   ${ETCHOSTS}
 EOF
+}
+
+function deploy_heroku {
+  local app=$1
+  local app_dir=/vagrant/apps/${app}
+  if [[ -d ${app_dir} ]] ; then
+    cd $app_dir
+  else
+    echo 'No directory named' $app_dir
+    exit 1
+  fi
+  local heroku_remote=`git remote -v | grep heroku`
+  if [ -z "$heroku_remote" ]; then
+    echo "There is no heroku remote set for this repo"
+  else
+    echo "do the work!"
+    #git push heroku master
+  fi
+
 }
