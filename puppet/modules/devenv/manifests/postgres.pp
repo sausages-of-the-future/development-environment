@@ -14,5 +14,3 @@ class devenv::postgres {
   }
 
 }
-
-include devenv::postgres

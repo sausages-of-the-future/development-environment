@@ -30,7 +30,5 @@ class devenv::ruby {
     ensure   => latest,
     provider => gem
   }
+
 }
-
-include devenv::ruby
-

@@ -14,6 +14,5 @@ class devenv::nginx {
         command => '/vagrant/script/bin/dev-host-conf',
         require => Exec['configure_nginx']
     }
-}
 
-include devenv::nginx
+}

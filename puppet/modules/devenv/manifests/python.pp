@@ -27,6 +27,3 @@ class devenv::python {
   }
 
 }
-
-include devenv::python
-

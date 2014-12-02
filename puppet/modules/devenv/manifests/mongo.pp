@@ -13,6 +13,5 @@ class devenv::mongo {
         tries    => 10,
         require  => Class['mongodb::server'],
     }
-}
 
-include devenv::mongo
+}

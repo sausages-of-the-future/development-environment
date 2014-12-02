@@ -1,4 +1,4 @@
-class devenv::base {
+class base {
 
     exec { 'apt_get_update':
         command => '/usr/bin/apt-get update'
@@ -13,11 +13,5 @@ class devenv::base {
     }
 }
 
-include devenv::base
-import 'libs.pp'
-import 'tools.pp'
-import 'python.pp'
-import 'ruby.pp'
-import 'mongo.pp'
-import 'nginx.pp'
-import 'postgres.pp'
+include base
+include devenv
