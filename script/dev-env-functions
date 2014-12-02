@@ -1,11 +1,11 @@
 #!/bin/bash
 
 set -e
-source /usr/local/bin/virtualenvwrapper.sh
 mkdir -p /vagrant/logs
 
 apps_and_ports=`cat /vagrant/config/apps | grep -v \# | grep -v '^\s*$'`
 DEV_ENV_REQUIREMENTS=/vagrant/config/virtual-env-global-requirements.txt
+GITHUB_ACCOUNT='sausages-of-the-future'
 
 function get_port_for_app {
   local app=$1
@@ -48,7 +48,7 @@ function is_valid_app {
 function update_development_environment {
   echo "Updating development environment"
   git -C /vagrant pull
-  lr-bootstrap
+  dev-bootstrap
 }
 
 function update_submodules_for_app {
@@ -68,7 +68,7 @@ function checkout {
 
   if [[ ! -d ${app_dir} ]] ; then
     mkdir -p /vagrant/apps/
-    git -C /vagrant/apps/ clone git@github.com:18D82E427F8755FFD90867600EC29F39/${app}.git
+    git -C /vagrant/apps/ clone git@github.com:${GITHUB_ACCOUNT}/${app}.git
     update_submodules_for_app ${app}
   fi
 }
@@ -117,7 +117,6 @@ function update_app {
 
 function create_virtual_env {
   local app_name=$1
-
   if [[ ! -d ${WORKON_HOME}/${app_name} ]] ; then
     echo "Creating python virtual env for ${app_name} in ${WORKON_HOME}"
     set +o errexit
@@ -244,12 +243,13 @@ function die_cant_find_any_apps {
   echo "You've called this script without specifiy which apps you need and I can't find a run_dev.sh"
   echo "in the current directory [`pwd`]"
   echo
-  echo "You either need to specify some apps, or lr-run-app from the base directory of an app with a run_dev.sh"
+  echo "You either need to specify some apps, or run-app from the base directory of an app with a run_dev.sh"
   echo
   exit 1
 }
 
 function configure_virtual_env_for_apps {
+  source /usr/local/bin/virtualenvwrapper.sh
   for app_to_start in $@; do
     (
       create_virtual_env ${app_to_start}
@@ -258,12 +258,12 @@ function configure_virtual_env_for_apps {
   done
 }
 
-function configure_nginx_and_host_file {
-
+function configure_nginx {
+  rm -rf /home/vagrant/.etchosts
   APPSLIST=/vagrant/config/apps
   SPLASH_PAGE=/vagrant/config/index.html
 
-  export DOMAIN="gov.local"
+  export DOMAIN="govuk.local"
 
   # Ensure domain
   TMPDEFAULT=$(mktemp -t nginx-default.XXXXXX)
@@ -320,6 +320,8 @@ EOF
     export APP_HTML_LIST="$APP_HTML_LIST <tr><td>$app</td><td>$port</td><td><a href=\"http://$app.$DOMAIN\">$app.$DOMAIN</a></td></tr>"
   done
 
+  echo 172.16.42.43 $ETCHOSTS > /home/vagrant/.etchosts 2>/dev/null
+
   # hook up helpful splash page
   # (I have to use a temp file, otherwise the result is blank, weirdly)
   TEMP=$(mktemp -t dev-env-splash-page.XXXXXX)
@@ -327,4 +329,18 @@ EOF
   perl -pi -e 's/PLACEHOLDER/$ENV{"APP_HTML_LIST"}/g' $TEMP
   sudo cp $TEMP /usr/share/nginx/html/index.html
   sudo service nginx restart > /dev/null 2>&1
+}
+
+function configure_host {
+  ETCHOSTS=`less /home/vagrant/.etchosts`
+  cat <<EOF > /etc/hosts
+  ::1 ip6-localhost ip6-loopback
+  fe00::0 ip6-localnet
+  ff00::0 ip6-mcastprefix
+  ff02::1 ip6-allnodes
+  ff02::2 ip6-allrouters
+  ff02::3 ip6-allhosts
+  0.0.0.0 devserver
+  ${ETCHOSTS}
+EOF
 }

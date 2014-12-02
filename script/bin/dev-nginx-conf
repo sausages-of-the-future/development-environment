@@ -1,0 +1,8 @@
+#!/bin/bash
+# Brings nginx configuration up to scratch with the apps list.
+
+set -e
+
+echo "Configuring nginx"
+source /vagrant/script/dev-env-functions
+configure_nginx
