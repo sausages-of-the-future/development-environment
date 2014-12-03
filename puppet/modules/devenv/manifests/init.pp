@@ -6,6 +6,9 @@ class devenv {
     include devenv::ruby
     include devenv::nginx
     include devenv::mongo
-    include devenv::postgres
+    #include devenv::java
+    #include devenv::postgres
+    #include devenv::redis
+    #include devenv::elasticsearch
 
 }
