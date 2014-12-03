@@ -2,6 +2,8 @@
 
 This repository contains the setup scripts for developers to quickly get up and running. By bootstrapping their developer environment from these scripts developers will be able to get all of the code repositories, run the unit tests and start the various applications that make up the land registry systems.
 
+**Very important consideration for those of you with 4gb memory or less**
+*set an environment variable VM_MEMORY for less than 4gb, before running vagrant up*
 
 ## Prerequisites
 
@@ -107,4 +109,4 @@ vagrant up
 
 ## Advanced topics
 
-For more detailed operations within the dev environment look here: https://github.com/LandRegistry/development-environment/blob/master/README_Advanced.md
+For more detailed operations within the dev environment look here: https://github.com/sausages-of-the-future/development-environment/blob/master/README_Advanced.md

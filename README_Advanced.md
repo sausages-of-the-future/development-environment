@@ -1,4 +1,4 @@
-## Land Registry development environment advanced concepts
+## Development environment advanced concepts
 
 ### Layout of the development environment
 
@@ -40,7 +40,7 @@ In order to work on a new application in the development environment you can fol
 
 First, create a git repository for the application and push it to github. In your application you will need to create the following files:
 
-#### If you want your application to be startable by scripts like *lr-run-app*
+#### If you want your application to be startable by scripts like *dev-run-app*
 
 You should add a *run_dev.sh* in the root of the application. This does not need to be executable and must issue the startup command for the application. It should not set any environment variables, the mechanism for this is described below.
 
@@ -68,12 +68,12 @@ will need to run *vagrant provision*
 
 Database migrations can be run each time you start the app if you add a call to *upgrade-database.sh* in your *run-dev.sh*
 
-You can also call the command *lr-upgrade-all-databases* to run all of the migrations.
+You can also call the command *dev-upgrade-all-databases* to run all of the migrations.
 
 
 #### If your application needs to run python unit tests
 
-If you want unit tests to be run by *lr-run-unit-tests* then you need to add a *tests* directory to the root of your app. Note: you need to place an *__init__.py* file in each test directory to ensure that it is picked up by py.test.
+If you want unit tests to be run by *dev-run-unit-tests* then you need to add a *tests* directory to the root of your app. Note: you need to place an *__init__.py* file in each test directory to ensure that it is picked up by py.test.
 
 #### Writing scripts to run in the virtual environmnet
 
@@ -113,28 +113,28 @@ The workflow that is envisioned is that a number of background applications will
 All of the applicatications can be started with
 
 ```
-lr-start-all
+dev-start-all
 ```
 
 A selection of applications can be started with
 
 ```
-lr-run-app [app-names]
+dev-run-app [app-names]
 ```
 
 For example, to run the system-of-record and casework frontend you can run
 
 ```
-lr-run-app system-of-record casework-frontend
+dev-run-app system-of-record casework-frontend
 ```
 
 #### Starting individual applications
 
-To start an individual application simply go into the application directory and run *lr-run-app*. So, for example, to start the casework-frontend do:
+To start an individual application simply go into the application directory and run *dev-run-app*. So, for example, to start the someapp do:
 
 ```
-cd /vagrant/apps/casework-frontend
-lr-run-app
+cd /vagrant/apps/someapp
+dev-run-app
 ```
 
 ### Running unit tests for individual applications
@@ -143,9 +143,5 @@ To run all of the *unit-tests* for an individual application you can run the fol
 
 ```
 cd /vagrant/apps/[app-name]
-lr-run-unit-tests
+dev-run-unit-tests
 ```
-
-### Running acceptance tests
-
-The acceptance tests are stored in /vagrant/apps/acceptance-tests, and they feature documentation at https://github.com/LandRegistry/acceptance-tests. Follow these instructions to run the acceptance tests locally.
