@@ -75,10 +75,17 @@ function checkout {
 
 function source_app_environment {
   local environment=/vagrant/apps/$1/environment.sh
+  local environment_private=/vagrant/apps/$1/environment_private.sh
 
   if [[ -f ${environment} ]]; then
     set +o errexit
     source ${environment}
+    set -e
+  fi
+
+  if [[ -f ${environment_private} ]]; then
+    set +o errexit
+    source ${environment_private}
     set -e
   fi
 }
