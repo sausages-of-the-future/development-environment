@@ -34,4 +34,5 @@ build
 dist
 *.deb
 *.egg-info
+.pip/cache
 
