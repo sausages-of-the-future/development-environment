@@ -14,4 +14,10 @@ class devenv::mongo {
         require  => Class['mongodb::server'],
     }
 
+    mongodb_database { www_gov:
+        ensure   => present,
+        tries    => 10,
+        require  => Class['mongodb::server'],
+    }
+
 }
