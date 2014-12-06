@@ -38,7 +38,7 @@ echo "Removing web asset cache"
 find . -type d -name ".webasset-cache" | xargs rm -rf
 
 echo "Removing python virtual envrionments"
-rm -rf /home/vagrant/gov-python-venvs
+rm -rf /home/vagrant/.virtualenvs
 
 echo "Removing unit test coverage reports"
 find . -type d -name "htmlcov" | xargs rm -rf
