@@ -20,7 +20,6 @@ case `uname` in
 		exit 1
 	;;
 esac
-
 source /vagrant/script/dev-env-functions
 dev-bootstrap
 dev-run-app $(all_apps)
