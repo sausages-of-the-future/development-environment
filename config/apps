@@ -8,7 +8,6 @@ registry:8000
 fishing:8001
 organisations:8002
 www:8003
-things:8004
-localgov:8005
-payment:8006
-work-uk:8007
+localgov:8004
+payment:8005
+work-uk:8006
