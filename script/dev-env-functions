@@ -6,7 +6,6 @@ mkdir -p /vagrant/logs
 apps_and_ports=`cat /vagrant/config/apps | grep -v \# | grep -v '^\s*$'`
 DEV_ENV_REQUIREMENTS=/vagrant/config/virtual-env-global-requirements.txt
 GITHUB_ACCOUNT='sausages-of-the-future'
-PYTHON_VERSION=python3
 
 function get_port_for_app {
   local app=$1
@@ -131,7 +130,10 @@ function init_virtual_env {
     set +o errexit
     # TODO: We're having to add the site-packages here for GDAL. This may cause problems later
     # and we need to figure out how to get GDAL to compile locally
-    mkvirtualenv -a "/vagrant/apps/${app_name}" --python=/usr/bin/$PYTHON_VERSION -r ${DEV_ENV_REQUIREMENTS} ${app_name}
+    PYTHON_VERSION=$(python_version_for_app ${app_name})
+    echo "Using Python version: ${PYTHON_VERSION}"
+
+    mkvirtualenv -a "/vagrant/apps/${app_name}" --python=/usr/bin/python$PYTHON_VERSION -r ${DEV_ENV_REQUIREMENTS} ${app_name}
     set -e
   fi
 
@@ -175,6 +177,12 @@ function check_all_apps_are_valid {
 
 function find_python_packages {
   echo `find  .  -type f -name __init__.py -print0 | xargs -0 -n1 dirname | grep -v tests | xargs dirname`
+}
+
+function python_version_for_app {
+  local app_name=$1
+  runtime=`cat /vagrant/apps/${app_name}/runtime.txt`
+  echo $runtime | sed -r 's/([^0-9]*([0-9]*)){1}.*/\2/'
 }
 
 function run_unit_tests_for_app {

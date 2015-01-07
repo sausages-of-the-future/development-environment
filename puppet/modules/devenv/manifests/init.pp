@@ -8,7 +8,7 @@ class devenv {
     include devenv::mongo
     #include devenv::java
     #include devenv::postgres
-    #include devenv::redis
+    include devenv::redis
     #include devenv::elasticsearch
 
 }
