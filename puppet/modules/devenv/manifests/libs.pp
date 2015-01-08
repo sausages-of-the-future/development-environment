@@ -32,4 +32,8 @@ class devenv::libs {
     ensure   => latest
   }
 
+  package { 'libevent-dev':
+    ensure   => latest
+  }
+
 }
