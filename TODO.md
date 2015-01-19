@@ -1,23 +1,22 @@
 
 - add registered address
 - position should be a dropdown
-- 'notifications' should be 'todo list'
-- add 'report a change' to org account
+- tidy up page of register
 
-
+DONE:
 - remove payment from fishing
-- signed in company page + tax infor
+- draw box on local alerts
+- Remove browser from local alerts
+- fix the sms alerts when starting an org
 - add fake graph to performance pages
-- add formation dates/time to public company pages
-- add type to company pages
+- signed in company page + tax infor
+- add 'report a change' to org account
+- 'notifications' should be 'todo list'
 - logo.png for local authority
+- add type to company pages
 - add done page to local authority transaction
 - better intro on the registers home page
 - tidy up page of services
-- tidy up page of register
-- show logo and explanation under security key
-
-DONE:
 - loose the columns on the org start page
 - button on invite page should be full width
 - make review page feel more official
