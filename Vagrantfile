@@ -12,7 +12,6 @@ Vagrant.configure("2") do |config|
      puppet.options = "--verbose --debug"
   end
 
-
   config.vm.synced_folder ".aptget", "/var/cache/apt/archives/"
 
   config.vm.provider :virtualbox do |vb|
